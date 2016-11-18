@@ -1,0 +1,28 @@
+.ace_btn
+{
+  display: inline-block;
+/*
+  font-size: 15px;
+  background:#E0FFFF;
+  border-radius: 5px;
+  display: block;
+  margin-left: 50%;
+*/
+}
+
+.ace-editor, .ace-editor span, .ace-editor iframe
+{
+  width: 100% !important;
+}
+
+#editor { 
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin-left: 15px;
+        margin-top: 15px;
+        width: 500px;
+        height: 400px;
+
+}
