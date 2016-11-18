@@ -15,39 +15,14 @@ def home():
         return render_template('login.html')
     else:
         return render_template("index.html")
-'''@app.route()
-def home2(POST_USERNAME):
-    if not session.get('logged in'):
-        return render_template('login.html')
-    else:
-        return render_template("quiz.html")'''         
-
-@app.route('/uploader',methods=['GET','POST'])
-def upload_file():
-    #global user
-    if request.method=='POST':
-        f=request.files['file']
-
-        global user     
-        submit=user+"_"+"dum.py"
-        f.save(submit)
-
-        #return 'file uploaded successfully'
-
-        str="python "+submit+"<"+"input.txt"+">"+ user+"_"+"result.txt"
-        status,output=subprocess.getstatusoutput(str)
-        if status!=0:
-           # return '<a href="http://localhost:4000/logout" class="button">Logout</a>file uploaded successfully but problem in execution '
-             return output            
-        else:
-            return '<a href="http://localhost:4000/logout" class="button">Logout</a> file uploaded successfully and executed successfully '   
+   
     
 
-def home2():
-    if session['logged_in']==False:
+"""def home2():
+    if not session.get['logged_in']==False:
         return render_template("login.html")
     else:
-        return render_template("index.html")
+        return render_template("index.html")"""
 
 @app.route("/background_process", methods=['GET', 'POST'])
 def background_process():
@@ -88,7 +63,7 @@ def do_admin_login():
         user=POST_USERNAME
     else:
         flash('wrong password!')
-    return home2()
+    return home()
 
 @app.route("/logout")
 def logout():
