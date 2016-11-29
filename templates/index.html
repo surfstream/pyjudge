@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>ACE in Action</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/ace/1.2.4/min/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -11,36 +10,41 @@
 <div class="container">
     <div class="panel panel-default">
 		<div class="panel-heading">
-		<span class="panel-title">Editor</span>
+		<h4>Write a program to displays a list prime numbers from 1 to 100</h4>
         </div>
         <div class="panel-body">
         <div class="row">
-        	<h4>Ace Editor</h4>
+        	
             <div class="col-md-6">
             	<div id="editor"></div>
             </div>
             <div class="col-md-6">
             <h4>Textarea</h4>
-            <textarea class="col-md-6" name="content" id="content" rows="5" cols="70" disabled="disabled"></textarea>
+            <textarea class="col-md-6" name="content" id="content" rows="5" cols="158" disabled="disabled"></textarea>
       	<div></div>
         </div>
  	</div>
-    <div id="result" class="text-center">---End of editor---</div>
+    <div id="result" class="text-center"></div>
     <button class="btn btn-primary" id="toggletextarea-btn">Hide TextArea</button>
-	<button class="btn btn-default" id="alertcontent-btn">Alert Content</button>
+	<button class="btn btn-default" id="alertcontent-btn">Submit</button>
 	<br/>
 	<br/>
 </div>
+
 <style type="text/css" media="screen">
   	#editor {
     	/** Setting height is also important, otherwise editor wont showup**/
-    	height: 175px;
+    	
+    
+        height: 380px;
 	}
 </style>
 <script>
    var textarea = $('#content');
 
    var editor = ace.edit("editor");
+   document.getElementById('editor').style.fontSize='16px';
+   editor.setHighlightActiveLine(true);
    editor.setTheme("ace/theme/twilight");
    editor.getSession().setMode("ace/mode/python");
 
@@ -76,52 +80,3 @@
 </script>
 </body>
 </html>
-
-
-
-<!--_____________________________________________________________________________
-<html>
-<head>
-	<link rel="stylesheet" href="css/editor.css">
-	<script src="https://cdn.jsdelivr.net/ace/1.2.4/min/ace.js" type="text/javascript" charset="utf-8"></script>
-
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script type=text/javascript>
-	$(function() {
-		$('a#process_input').bind('click', function() {
-			$getJSON('/background_process', {
-				proglang: $('input[name="proglang"]').val(),
-			}, function(data) {
-				$("#result").text(data.result);
-				var $div = $("<div>");
-				$div.attr("id", "editor");
-				$div.attr("class", "ace-editor");
-				$(this).after($div);
-				var editor = ace.edit("editor");
-				editor.setTheme("ace/theme/twilight");
-				editor.getSession().setMode("ace/mode/python");
-				editor.setValue("the new text here");
-				editor.getSession().setTabSize(4);
-				editor.getSession().setUseWrapMode(true);
-				editor.$blockScrolling="Infinity"
-
-			});
-			return false;
-		  });
-		});
-	</script>
-
-</head>
-
-<body>
-	<div class='container' id=contain>
-	<h3>Welcome! Which is the best programming language of them all?</h3>
-		<form>
-			<input type=text size=5 name=proglang>
-			<a href=# id=process_input><button class='btn btn-default'>Submit</button></a>
-		</form>
-	<p id=result></p>
-	</div>
-</body>
-</html>
--->
