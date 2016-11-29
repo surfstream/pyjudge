@@ -1,8 +1,5 @@
 #! /bin/bash
 
-cd ~
-
-cd  pyjudge
 python3 app.py &
 
 cd ../Tango
