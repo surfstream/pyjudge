@@ -37,7 +37,7 @@ def background_process():
             if code == None:
                 return jsonify(result='error retrieving data')
             else:
-                f = open(user+".py", 'w')
+                f = open(user+"_primes.py", 'w')
                 f.write(code['code'])
                 f.close()   
                 return jsonify(result=code['code'])
