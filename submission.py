@@ -1,8 +1,8 @@
 import os
-from subprocess import call as run
+from subprocess import run
 
-userArg = "user2"
-userFileArg = 'user2_primes.py'
-userJobArg = '{"localFile" : "userfile", "destFile" : "primes.py"}'.replace("userfile", userFileArg)
-run(['bash', 'submit.sh', userFileArg, userJobArg, userArg])
+def submit(user, user_file):
+    user_job = '{"localFile" : "userfile", "destFile" : "primes.py"}'.replace("userfile", user_file)
+    retcode = run(['bash', 'submit.sh', user_file, user_job, user])
+    return retcode
 

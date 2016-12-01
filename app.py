@@ -3,7 +3,9 @@ import os
 from sqlalchemy.orm import sessionmaker
 from tabledef import *
 from werkzeug import secure_filename
-import subprocess
+from multiprocessing import Process
+from submission import submit
+
 engine = create_engine('sqlite:///tutorial.db', echo=True)
 app = Flask(__name__)
 user="hello"
@@ -14,14 +16,7 @@ def home():
         return render_template('login.html')
     else:
         return render_template("index.html")
-   
-    
 
-"""def home2():
-    if not session.get['logged_in']==False:
-        return render_template("login.html")
-    else:
-        return render_template("index.html")"""
 
 @app.route("/background_process", methods=['GET', 'POST'])
 def background_process():
@@ -35,17 +30,34 @@ def background_process():
         elif request.method == 'POST':
             code = request.get_json()
             if code == None:
-                return jsonify(result='error retrieving data')
+                return jsonify(result='Error detrieving data.')
             else:
-                f = open(user+"_primes.py", 'w')
+                fname = user + '_primes.py'
+                f = open(fname, 'w')
                 f.write(code['code'])
-                f.close()   
-                return jsonify(result=code['code'])
+                f.close()
+                print("submission")
+                p = Process(target=submit, args=(user, fname))
+                p.start()
+                p.join()
+                outf = open("admin.out", 'w')
+                for line in open('../Tango/courselabs/pyjudge-demo/output/'+user+'.out', 'r'):
+                    outf.write(line)
+                outf.close()
+                print(strn)
+                return jsonify(strn)
     except Exception as e:
         return str(e)        
 
-                   
- 
+
+@app.route("/hint_process", methods=['GET', 'POST'])
+def hint_process():
+    try:
+        pass
+    except Exception as e:
+        return str(e)
+
+
 @app.route('/login', methods=['POST'])
 def do_admin_login():
  
