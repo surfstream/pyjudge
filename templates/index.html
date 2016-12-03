@@ -21,7 +21,7 @@
             <div class="col-md-6">
             <h4>Textarea</h4>
             <textarea class="col-md-6" name="content" id="content" rows="5" cols="158" disabled="disabled"></textarea>
-      	<div></div>
+      	<div id="result">result area</div>
         </div>
  	</div>
     <div id="result" class="text-center"></div>
@@ -48,23 +48,23 @@
    editor.setTheme("ace/theme/twilight");
    editor.getSession().setMode("ace/mode/python");
 
-   editor.getSession().on('change', function () {
+   /*editor.getSession().on('change', function () {
        textarea.val(editor.getSession().getValue());
-   });
+   });*/
 
-   textarea.val(editor.getSession().getValue());
+   //textarea.val(editor.getSession().getValue());
 
-   $("#toggletextarea-btn").on('click', function () {
+   /*$("#toggletextarea-btn").on('click', function () {
        textarea.toggle();
        $(this).text(function (i, text) {
            return text === "Show Content" ? "Hide Content" : "Show Content";
        });
-   });
-
+   });*/
 	
    $("#alertcontent-btn").on('click', function () {
 		
 		var edit_val = editor.getSession().getValue();
+		console.log("running ajax")
    		$.ajax({
    			url: '/background_process',
    			type: 'POST',
@@ -74,7 +74,10 @@
    			}),
    			dataType: 'json'
    		}).done(function(data){
-			$("#result").text(data.result);
+   		    //var texA = $('#content');
+   		    //texA.val(data.result);
+			//$("#result").text(data.result);
+			console.log(data.result);
 		});
    });
 </script>

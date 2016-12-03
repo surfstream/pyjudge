@@ -1,14 +1,18 @@
-from flask import Flask, flash, redirect, render_template, request, session, abort
 import os
+import time
+from flask import Flask, flash, redirect, render_template, request, session, abort
+from requests import get as poll
 from sqlalchemy.orm import sessionmaker
 from tabledef import *
 from werkzeug import secure_filename
+from subprocess import run
 from multiprocessing import Process
 from submission import submit
 
 engine = create_engine('sqlite:///tutorial.db', echo=True)
 app = Flask(__name__)
 user="hello"
+polling_address = "http://localhost:5001/poll/pyjudge/demo/"
  
 @app.route('/')
 def home():
@@ -40,12 +44,21 @@ def background_process():
                 p = Process(target=submit, args=(user, fname))
                 p.start()
                 p.join()
-                outf = open("admin.out", 'w')
-                for line in open('../Tango/courselabs/pyjudge-demo/output/'+user+'.out', 'r'):
-                    outf.write(line)
+                pol = poll(polling_address+user+'.out/')
+                while 'Output file not found' in pol.text:
+                    pol = poll(polling_address+user+'.out/')
+                    time.sleep(1)
+                outf = open(user+'.out', 'w')
+                string = str(pol.text)
+                outf.write(string)
                 outf.close()
-                print(strn)
-                return jsonify(strn)
+                #outf = open("admin.out", 'w')
+                #for line in open('../Tango/courselabs/pyjudge-demo/output/'+user+'.out', 'r'):
+                #    outf.write(line)
+                #outf.close()
+                run(['rm', '../Tango/courselabs/pyjudge-demo/output/'+user+'.out'])
+                #return "hello World"
+                return jsonify(result=string)
     except Exception as e:
         return str(e)        
 
