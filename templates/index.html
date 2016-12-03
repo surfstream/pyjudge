@@ -14,7 +14,6 @@
         </div>
         <div class="panel-body">
         <div class="row">
-        	
             <div class="col-md-6">
             	<div id="editor"></div>
             </div>
@@ -52,7 +51,7 @@
        textarea.val(editor.getSession().getValue());
    });*/
 
-   //textarea.val(editor.getSession().getValue());
+   textarea.val(editor.getSession().getValue());
 
    /*$("#toggletextarea-btn").on('click', function () {
        textarea.toggle();
@@ -64,6 +63,7 @@
    $("#alertcontent-btn").on('click', function () {
 		
 		var edit_val = editor.getSession().getValue();
+		var tex = $('#content')
 		console.log("running ajax")
    		$.ajax({
    			url: '/background_process',
@@ -74,10 +74,7 @@
    			}),
    			dataType: 'json'
    		}).done(function(data){
-   		    //var texA = $('#content');
-   		    //texA.val(data.result);
-			//$("#result").text(data.result);
-			console.log(data.result);
+   		    $("#content").val(data.result);
 		});
    });
 </script>

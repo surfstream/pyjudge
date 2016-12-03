@@ -1,6 +1,6 @@
 import os
 import time
-from flask import Flask, flash, redirect, render_template, request, session, abort
+from flask import Flask, flash, redirect, render_template, request, session, abort, jsonify
 from requests import get as poll
 from sqlalchemy.orm import sessionmaker
 from tabledef import *
