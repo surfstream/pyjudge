@@ -10,7 +10,6 @@ def closest():
     list_file = ["example/test2.py", "example/test3.py"]
     target = "example/test1.py"
     res = find_similar.find_similar(target, list_file)
-    print()
     print(res)
 
 if __name__ == "__main__":
