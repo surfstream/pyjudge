@@ -5,8 +5,8 @@ In module find_similar.py, it contains a function find_similar. This function
 will accept a target file and a list of file. This function will return a file
 in the list which is closest to the target.
 
-In module compareFile.py, it contains a function editTreeDistance. This function
-will return the distance of the two files.
+In module compare_file.py, it contains a function editTreeDistance.
+This function will return the distance of the two files.
 
-The nodeVisit.py module is a re-implemented module that can walk through all the
-nodes in the ast tree and store the nodes in a list.
+The node_visit.py module is a re-implemented module that can walk through
+all the nodes in the ast tree and store the nodes in a list.
