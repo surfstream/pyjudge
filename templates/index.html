@@ -18,14 +18,14 @@
             	<div id="editor"></div>
             </div>
             <div class="col-md-6">
-            <h4>Textarea</h4>
-            <textarea class="col-md-6" name="content" id="content" rows="5" cols="158" disabled="disabled"></textarea>
-      	<div id="result">result area</div>
+            <h4>Results:</h4>
+            <textarea class="col-md-6" name="content" id="content" rows="15" cols="100" disabled="disabled"></textarea>
+      	<div class="col-md-6">
         </div>
  	</div>
     <div id="result" class="text-center"></div>
-    <button class="btn btn-primary" id="toggletextarea-btn">Hide TextArea</button>
-	<button class="btn btn-default" id="alertcontent-btn">Submit</button>
+    <button class="btn btn-primary" id="hint-btn">Hint</button>
+	<button class="btn btn-default" id="submit-btn">Submit</button>
 	<br/>
 	<br/>
 </div>
@@ -33,9 +33,8 @@
 <style type="text/css" media="screen">
   	#editor {
     	/** Setting height is also important, otherwise editor wont showup**/
-    	
-    
         height: 380px;
+        width: 700px;
 	}
 </style>
 <script>
@@ -44,38 +43,37 @@
    var editor = ace.edit("editor");
    document.getElementById('editor').style.fontSize='16px';
    editor.setHighlightActiveLine(true);
-   editor.setTheme("ace/theme/twilight");
+   editor.setTheme("ace/theme/xcode");
    editor.getSession().setMode("ace/mode/python");
 
-   /*editor.getSession().on('change', function () {
-       textarea.val(editor.getSession().getValue());
-   });*/
+   $("#submit-btn").on('click', function () {
+        var edit_val = editor.getSession().getValue();
+        $.ajax({
+          url: '/background_process',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+          	code: edit_val
+          }),
+          dataType: 'json'
+        }).done(function(data){
+          $("#content").val(data.result);
+        });
+   });
+   $("#hint-btn").on('click', function(){
+        var edit_val = editor.getSession().getValue();
+        $.ajax({
+          url: '/hint_process',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            code: edit_val
+          }),
+          dataType: 'json'
+        }).done(function(data){
+          $("#content").val(data.result);
+        });
 
-   textarea.val(editor.getSession().getValue());
-
-   /*$("#toggletextarea-btn").on('click', function () {
-       textarea.toggle();
-       $(this).text(function (i, text) {
-           return text === "Show Content" ? "Hide Content" : "Show Content";
-       });
-   });*/
-	
-   $("#alertcontent-btn").on('click', function () {
-		
-		var edit_val = editor.getSession().getValue();
-		var tex = $('#content')
-		console.log("running ajax")
-   		$.ajax({
-   			url: '/background_process',
-   			type: 'POST',
-   			contentType: 'application/json',
-   			data: JSON.stringify({
-   				code: edit_val
-   			}),
-   			dataType: 'json'
-   		}).done(function(data){
-   		    $("#content").val(data.result);
-		});
    });
 </script>
 </body>
