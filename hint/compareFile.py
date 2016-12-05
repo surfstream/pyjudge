@@ -1,6 +1,8 @@
 """
 This module calculate the edit treee distance of two python codes
-and returns the distance of two python codes
+and returns the distance of two python codes.
+
+It will first convert a file into a ast tree. Then it will save all the ast nodes in a list. From the list, it will convert the nodes into a edit distance tree and finally calculate the distance of two files
 """
 
 import ast

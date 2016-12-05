@@ -1,5 +1,5 @@
 """
-This module finds the most similar code from a list to the target code
+This module finds the most similar code from a list to the target code by using the compareFile module
 """
 
 import compareFile
