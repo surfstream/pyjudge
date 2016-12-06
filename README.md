@@ -15,7 +15,7 @@ KEYS = ["pyjudge"]
 
 Setting Up PyJudge:
 
-1. When cloning PyJudge, clone it so that is has the same parent directory as Tango. 
+1. When cloning PyJudge, clone it so that is has the same parent directory as the cloned Tango. 
 3. Install required packages found in repo:   ```pip3 install -r requirements.txt```
 4. Instantiate User DB: ```python3 dummy.py```
 
