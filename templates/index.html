@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/ace/1.2.4/min/ace.js" type="text/javascript" charset="utf-8"></script>
-
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/ace/1.2.4/min/ace.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 <div class="container">
     <div class="panel panel-default">
-		<div class="panel-heading">
-		<h4>Write a program to displays a list prime numbers from 1 to 100</h4>
+	    <div class="panel-heading">
+	    <h4>Write a program to displays a list prime numbers from 1 to 100</h4>
         </div>
         <div class="panel-body">
         <div class="row">
@@ -22,13 +20,13 @@
             <textarea class="col-md-6" name="content" id="content" rows="15" cols="100" disabled="disabled"></textarea>
       	<div class="col-md-6">
         </div>
- 	</div>
+    </div>
     <div id="result" class="text-center"></div>
     <button class="btn btn-primary" id="hint-btn">Hint</button>
-	<button class="btn btn-default" id="submit-btn">Submit</button>
-	<button onclick="location.href='http://0.0.0.0:4003/logout'" type="button">logout</button>	
-	<br/>
-	<br/>
+    <button class="btn btn-default" id="submit-btn">Submit</button>
+    <button onclick="location.href='http://0.0.0.0:4003/logout'" type="button">Logout</button>	
+    <br/>
+    <br/>
 </div>
 
 <style type="text/css" media="screen">
@@ -39,43 +37,49 @@
 	}
 </style>
 <script>
-   var textarea = $('#content');
+    //generate the ACE Editor and prepare its appearance
+    var editor = ace.edit("editor");
+    document.getElementById('editor').style.fontSize='16px';
+    editor.setHighlightActiveLine(true);
+    editor.setTheme("ace/theme/xcode");
+    editor.getSession().setMode("ace/mode/python");
 
-   var editor = ace.edit("editor");
-   document.getElementById('editor').style.fontSize='16px';
-   editor.setHighlightActiveLine(true);
-   editor.setTheme("ace/theme/xcode");
-   editor.getSession().setMode("ace/mode/python");
+    //define onclick function for submission
+    $("#submit-btn").on('click', function () {
+        //retrieve editor data
+        var edit_val = editor.getSession().getValue();
+        //generate the ajax post call and submit the code within a json object
+        $.ajax({
+            url: '/background_process',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                code: edit_val
+            }),
+            dataType: 'json'
+        }).done(function(data){
+            //once the server sends its response to the client, modify the 
+            //text area to display the submission results
+            $("#content").val(data.result);
+        });
+    });
 
-   $("#submit-btn").on('click', function () {
+    $("#hint-btn").on('click', function(){
+        //same as above
         var edit_val = editor.getSession().getValue();
         $.ajax({
-          url: '/background_process',
-          type: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({
-          	code: edit_val
-          }),
-          dataType: 'json'
+            url: '/hint_process',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                code: edit_val
+            }),
+            dataType: 'json'
         }).done(function(data){
-          $("#content").val(data.result);
+            //display hint file output
+            $("#content").val(data.result);
         });
-   });
-   $("#hint-btn").on('click', function(){
-        var edit_val = editor.getSession().getValue();
-        $.ajax({
-          url: '/hint_process',
-          type: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({
-            code: edit_val
-          }),
-          dataType: 'json'
-        }).done(function(data){
-          $("#content").val(data.result);
-        });
-
-   });
+    });
 </script>
 </body>
 </html>
